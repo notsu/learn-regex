@@ -16,21 +16,18 @@
 * [Greek](README-gr.md)
 * [Thai](README-th.md)
 
-## What is Regular Expression?
+## อะไรคือ Regular Expression?
 
-> Regular expression is a group of characters or symbols which is used to find a specific pattern from a text.
+> Regular expression เป็นกลุ่มของ characters หรือ symbols ที่ใช้ในการหารูปแบบเฉพาะ (specific pattern) ของข้อความ
 
-A regular expression is a pattern that is matched against a subject string from
-left to right. The word "Regular expression" is a mouthful, you will usually
-find the term abbreviated as "regex" or "regexp". Regular expression is used for
-replacing a text within a string, validating form, extract a substring from a
-string based upon a pattern match, and so much more.
+Regular expression เป็นรูปแบบ (pattern) ที่เอาไว้จับคู่ (matched) กับก้อน string จากซ้ายไปขวา
+โดยคำว่า "Regular expression" เป็นคำที่มักจะได้ยินกันบ่อยๆ เรามักจะย่อคำเหลือเป็นคำว่า "regex" หรือว่า "regexp"
+Regular expression เป็นใช้ในหลากหลายบริบทมากเช่น ใช้ในการเปลี่ยนแทนที่ข้อความบางส่วน
+ตรวจสอบรูปแบบข้อความว่าถูกต้องหรือไม่ ดึงข้อความตามจากข้อความตามรูปแบบที่ตรงกัน และอื่นๆ อีกมากมาย
 
-Imagine you are writing an application and you want to set the rules for when a
-user chooses their username. We want to allow the username to contain letters,
-numbers, underscores and hyphens. We also want to limit the number of characters
-in username so it does not look ugly. We use the following regular expression to
-validate a username:
+ลองจินตนาการเป็นเหมือนคุณต้องการสร้างกฏ (rules) สำหรับเมื่อผู้ใช้ต้องการสร้าง username ของตัวเอง
+เราอนุญาตให้ใช้เพียงแค่ตัวอักษร ตัวเลข ขีดล่าง และขีดกลาง และจำกัดจำนวนตัวอักษรเพื่อไม่ให้สั้นหรือยาวเกินไป
+เราจะใช้ Regular expression สำหรับในการตรวจสอบ (validate) ว่าเป็นไปตามกฏที่ตั้งไว้หรือไม่
 
 <br/><br/>
 <p align="center">
@@ -41,7 +38,12 @@ Above regular expression can accept the strings `john_doe`, `jo-hn_doe` and
 `john12_as`. It does not match `Jo` because that string contains uppercase
 letter and also it is too short.
 
-## Table of Contents
+จาก Regular expression ข้างจะเห็นว่าถ้าเราใช้ strings คำว่า `john_doe`, 'jo-hn_doe' และ
+`john12_as` จะสามารถใช้ได้ ในขณะที่ถ้าเราใช้คำว่า `Jo` ซึ่ง string นี้จะมีตัวพิมพ์ใหญ่และสั้นกว่า
+ที่กำหนดรูปแบบเอาไว้จะไม่ตรงกับรูปแบบ
+
+
+## สารบัญ
 
 - [Basic Matchers](#1-basic-matchers)
 - [Meta character](#2-meta-characters)
@@ -72,27 +74,32 @@ letter and also it is too short.
 
 ## 1. Basic Matchers
 
-A regular expression is just a pattern of characters that we use to perform
-search in a text.  For example, the regular expression `the` means: the letter
-`t`, followed by the letter `h`, followed by the letter `e`.
+Regular expression คือรูปแบบของอักขระที่เราจะใช้ในการค้นข้อความ ยกตัวอย่างเช่น
+regular expression `the` หมายความว่าเราต้องการค้นหาข้อความที่มี `t` ตามด้วย `h`
+และตามด้วย `e`
+
 
 <pre>
 "the" => The fat cat sat on <a href="#learn-regex"><strong>the</strong></a> mat.
 </pre>
 
-[Test the regular expression](https://regex101.com/r/dmRygT/1)
+[ทดสอบ regular expression](https://regex101.com/r/dmRygT/1)
 
 The regular expression `123` matches the string `123`. The regular expression is
 matched against an input string by comparing each character in the regular
 expression to each character in the input string, one after another. Regular
 expressions are normally case-sensitive so the regular expression `The` would
 not match the string `the`.
+Regular expression `123` จะตรงกับ string `123` ซึ่ง regular expression จะเปรียบเทียบ
+ข้อความที่ส่งเข้าโดยการเปรียบเทียบตัวอักษรทีละตัว และโดยปกติแล้ว regular expression จะ
+เป็น case-sensitive หมายความว่าถ้าเราใช้ regular expression  ว่า `The` เมื่อนำมา
+เปรียบเทียบแล้วจะไม่ตรงกับ `the`
 
 <pre>
 "The" => <a href="#learn-regex"><strong>The</strong></a> fat cat sat on the mat.
 </pre>
 
-[Test the regular expression](https://regex101.com/r/1paXsy/1)
+[ทดสอบ regular expression](https://regex101.com/r/1paXsy/1)
 
 ## 2. Meta Characters
 
@@ -101,13 +108,17 @@ characters do not stand for themselves but instead are interpreted in some
 special way. Some meta characters have a special meaning and are written inside
 square brackets. The meta characters are as follows:
 
-|Meta character|Description|
+Meta characters คือกลุ่มก้อนของ Regular Expression ไม่ได้มีความหมายถึงเหมือนตัวอักษระ
+ของมันเองตรงตัว แต่มันจะถูกแปรความหมายในทางอื่นเพื่อใช้งานแบบพิเศษ ตัวอย่างใน meta characters
+บางตัวจะมีความหมายที่พิเศษและจะเขียนอยู่ในตัว square brackets ซึ่งมี meta characters ดังนี้:
+
+|Meta character|คำอธิบาย|
 |:----:|----|
-|.|Period matches any single character except a line break.|
-|[ ]|Character class. Matches any character contained between the square brackets.|
-|[^ ]|Negated character class. Matches any character that is not contained between the square brackets|
+|.|หมายถึงกับอักขระอะไรก็ตามยกเว้นขึ้นตัวขึ้นบรรทัดใหม่|
+|[ ]|คือ Character class หมายถึงตรงกับอักขระใดๆ ก็ตามที่อยู่ใน square brackets|
+|[^ ]|Negated character class หมายถึงตรงกับอักขระอะไรก็ตามที่ไม่ได้อยู่ใน square brackets|
 |*|Matches 0 or more repetitions of the preceding symbol.|
-|+|Matches 1 or more repetitions of the preceding symbol.
+|+|Matches 1 or more repetitions of the preceding symbol.|
 |?|Makes the preceding symbol optional.|
 |{n,m}|Braces. Matches at least "n" but not more than "m" repetitions of the preceding symbol.|
 |(xyz)|Character group. Matches the characters xyz in that exact order.|
